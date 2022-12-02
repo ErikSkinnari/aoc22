@@ -13,5 +13,11 @@ for line in fileContent:
         elveCalorieCollection = elveCalorieCollection + int(line)
 
 
-print(max(elves))
+# print(max(elves)) ## Part I
+
+elves.sort(reverse = True)
+
+topCalories = elves[0:3]
+combinedCalories = sum(topCalories)
+print(combinedCalories)
 
