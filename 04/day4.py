@@ -1,6 +1,8 @@
 input = open("input.txt", "r")
 
 completeContainsCounter = 0
+overlappingCounter = 0
+
 
 def rangeIsContained(range1x, range1y, range2x, range2y):
     if ((range1x <= range2x and range1y >= range2y) 
@@ -8,7 +10,13 @@ def rangeIsContained(range1x, range1y, range2x, range2y):
         return True
     return False
 
+def rangeIsOverlapping(range1x, range1y, range2x, range2y):
+    if ((range1x <= range2x and range1y >= range2x)
+            or (range2x <= range1x and range2y >= range1x)):
+        return True
+    return False
 
+        
 for line in input:
 
     range1 = line.split(',')[0]
@@ -21,7 +29,10 @@ for line in input:
 
     if rangeIsContained(range1x, range1y, range2x, range2y):
         completeContainsCounter += 1
+    if rangeIsOverlapping(range1x, range1y, range2x, range2y):
+        overlappingCounter += 1
 
-print(completeContainsCounter)
+print('Complete Contains: ', completeContainsCounter)
+print('Overlaps: ' , overlappingCounter)
 
 
