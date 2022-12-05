@@ -14,10 +14,21 @@ def getPriorityScore(item):
 def findCommonItem(compartmentOne, compartmentTwo):
     return ''.join(set(compartmentOne).intersection(compartmentTwo))
 
+def findBadgeItem(r1, r2, r3):
+    return ''.join(set(r1).intersection(r2, r3, itemCollection))
 
-for rucksack in fileContent:
-    commonItem = findCommonItem(getFirstCompartment(rucksack), getSecondCompartment(rucksack))
-    priorityScore += getPriorityScore(commonItem)
+# solution part 1
+# for rucksack in fileContent:
+#     commonItem = findCommonItem(getFirstCompartment(rucksack), getSecondCompartment(rucksack))
+#     priorityScore += getPriorityScore(commonItem)
+
+# solution part 2
+rucksacks = []
+for line in fileContent:
+    rucksacks.append(line)
+
+for index in range(0, len(rucksacks), 3):
+    badge = findBadgeItem(rucksacks[index], rucksacks[index + 1], rucksacks[index + 2])
+    priorityScore += getPriorityScore(badge)
 
 print(priorityScore)
-
