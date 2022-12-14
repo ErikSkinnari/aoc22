@@ -5,21 +5,17 @@ yValues = []
 
 rockPaths = []
 for line in filecontent:
-    print(line)
     rockStructurePathNodes = line.replace("\n", "").split(" -> ")
 
     for node in rockStructurePathNodes:
-        print(node)
         x, y = node.split(",")
-        print(x)
-        print(y)
         xValues.append(int(x))
         yValues.append(int(y))
 
     for i in range(1, len(rockStructurePathNodes) - 1):
         rockPaths.append([rockStructurePathNodes[i-1], rockStructurePathNodes[i]])
 
-        
+"""
 print("X:")
 print("xValues.len: ", len(xValues))
 print(min(xValues))
@@ -29,10 +25,7 @@ print("Y:")
 print("yValues.len: ", len(yValues))
 print(min(yValues))
 print(max(yValues))
-
-for path in rockPaths:
-    print(path)
-#print(len(rockPaths))
+"""     
 
 caveMatrix = []
 
@@ -64,22 +57,13 @@ for path in rockPaths:
             caveMatrix[yPos][x1 - xOffset] = "#"
     else:
         for xPos in range(x1 - xOffset, x2 - xOffset):
-            print(xPos)
-            print(y1)
             caveMatrix[y1 - 1][xPos] = "#"
-
-    
 
 
 for line in caveMatrix:
     for spot in line:
         print(spot, end="")
     print()
-
-
-
-#for path in rockPaths:
-
 
 class Sand:
     def __init__(self):
