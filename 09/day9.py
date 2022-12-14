@@ -14,21 +14,22 @@ class Vector:
     def __hash__(self):
         return hash(('x', self.x, 'y', self.y))
 
-def normalizeChange(value):
-    if value < 0:
+def getChangeValue(deltaValue):
+    if deltaValue < 0:
         return -1
-    elif value > 0:
+    elif deltaValue > 0:
         return 1
     return 0
 
 def calculateChange(deltaX, deltaY, changeX, changeY):
+    change = [ 0, 0 ]
     if abs(deltaX) > 1 and abs(deltaY) == 0:
-        return [changeX, 0]
+        change = [changeX, 0]
     elif abs(deltaY) > 1 and abs(deltaX) == 0:
-        return [ 0, changeY]
+        change = [ 0, changeY]
     elif (abs(deltaX) > 0 and abs(deltaY) > 1) or (abs(deltaX) > 1 and abs(deltaY) > 0):
-        return [ changeX, changeY ]
-    return [ 0, 0 ]
+        change = [ changeX, changeY ]
+    return change
 
 class Mover:
     def __init__(self):
@@ -50,41 +51,13 @@ class Mover:
     def right(self):
         self.x += 1
 
-    #def moveHead(self, direction, steps): # step 1
     def move(self, x, y):
         if x == 0 and y == 0:
             return [0, 0]
         self.x += x
         self.y += y
 
-        #        for i in range(int(steps)):
-        #    match direction:
-        #        case "U":
-        #            self.up()
-        #        case "D":
-        #            self.down()
-        #        case "L":
-        #            self.left()
-        #        case "R":
-        #            self.right()
-                    
-            #print("After movement:")
-            #print("Head: ", self.x, self.y)
-        self.moveTail()
-        return [self.tailX, self.tailY] # added part 2
-
-    def moveTail(self):
-        deltaX = self.x - self.tailX
-        deltaY = self.y - self.tailY
-        changeX = normalizeChange(deltaX)
-        changeY = normalizeChange(deltaY)
-        
-        movement = calculateChange(deltaX, deltaY, changeX, changeY)
-        print("movement")
-        print(movement)
-        self.tailX += movement[0]
-        self.tailY += movement[1]
-        self.visited.append(Vector(self.tailX, self.tailY))
+        return [self.x, self.y] # added part 2
 
 class Follower():
     def __init__(self):
@@ -92,15 +65,13 @@ class Follower():
         self.y = 0
         self.visited = []
 
-    def follow(self, followingX, followingY):
-        deltaX = self.x - followingX
-        deltaY = self.y - followingY
-        changeX = normalizeChange(deltaX)
-        changeY = normalizeChange(deltaY)
+    def follow(self, xToFollow, yToFollow):
+        deltaX = xToFollow - self.x
+        deltaY = yToFollow - self.y
+        changeX = getChangeValue(deltaX)
+        changeY = getChangeValue(deltaY)
         movement = calculateChange(deltaX, deltaY, changeX, changeY)
 
-        print("movement follower")
-        print(movement)
         self.x += movement[0]
         self.y += movement[1]
         self.visited.append(Vector(self.x, self.y))
@@ -138,13 +109,13 @@ nine = Follower()
 
 interpretedInstructions = translateInput()
 
+
 for line in interpretedInstructions:
     print()
     print("INSTRUCTION")
     print(line)
     print("HEAD")
     headTailPos = head.move(line[0], line[1])
-    print(head.x, head.y)
     print(headTailPos)
     print("ONE")
     oneTailPos = one.follow(headTailPos[0], headTailPos[1])
@@ -163,5 +134,6 @@ for line in interpretedInstructions:
 
 
 unique = list(set(nine.visited))
+#unique = list(set(one.visited))
 print(len(unique))
 
