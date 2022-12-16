@@ -70,6 +70,19 @@ class Sand:
         self.isResting = false
         self.x = 500
         self.y = 0
+        self.isResting = False
 
-    #def fall(self):
+    def fall(self, caveMap, xOffset):
+        print("falling")
+
+
+
+
+
+
+
+
+
+
+
 
